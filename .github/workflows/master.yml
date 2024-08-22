@@ -54,9 +54,6 @@ jobs:
         env:
           DATABASE_URL: mysql://root:github_action@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/payment_proxy
 
-      - name: Install PHPUnit
-        run: simple-phpunit install
-
       - name: Run tests
-        run: simple-phpunit --coverage-text
+        run: php bin/phpunit --coverage-text
 
