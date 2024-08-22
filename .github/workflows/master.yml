@@ -44,7 +44,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
       - name: Install Dependencies
-        run: composer install install --no-progress --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Run Migration
         run: |
