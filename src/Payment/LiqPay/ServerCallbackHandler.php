@@ -12,6 +12,9 @@ use App\Payment\LiqPay\Exception\ResponseDecodeException;
 use App\Payment\LiqPay\Response\MessageDecoder;
 use App\Payment\LiqPay\Response\PaymentStatusResponse;
 
+/**
+ * Checkout callback handler.
+ */
 final readonly class ServerCallbackHandler implements ServerCallbackHandlerInterface
 {
     public function __construct(

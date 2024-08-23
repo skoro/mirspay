@@ -20,6 +20,9 @@ interface GatewayInterface
      */
     public function getName(): string;
 
+    /**
+     * Whether the payment gateway is in test mode ?
+     */
     public function isTestMode(): bool;
 
     public function getPurchaseRequestBuilder(): PurchaseRequestBuilderInterface;

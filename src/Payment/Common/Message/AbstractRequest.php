@@ -19,7 +19,7 @@ abstract class AbstractRequest implements RequestInterface
 
     public function __construct(
         protected readonly HttpClientInterface $httpClient,
-        ParameterBag|null $parameters = null,
+        ParameterBag | null $parameters = null,
     ) {
         $this->parameters = $parameters ?? new ParameterBag();
     }
@@ -30,6 +30,8 @@ abstract class AbstractRequest implements RequestInterface
 
     /**
      * @return non-empty-string The request http method.
+     *
+     * @see static::doRequest()
      */
     public function getHttpMethod(): string
     {
@@ -38,17 +40,28 @@ abstract class AbstractRequest implements RequestInterface
 
     /**
      * @return non-empty-string The request api url.
+     *
+     * @see static::doRequest()
      */
     abstract public function getRequestUrl(): string;
 
     /**
+     * Validates the request before sending.
+     *
      * @throws InvalidRequestException The request is not valid.
+     * @throws RequestParameterRequiredException The required parameter value is not set.
+     *
+     * @see static::send()
+     * @see static::validateParameters()
      */
     abstract public function validate(): void;
 
     /**
+     * Validates and sends the request.
+     *
      * @throws InvalidRequestException
      * @throws TransportExceptionInterface
+     * @throws RequestParameterRequiredException
      */
     public function send(): ResponseInterface
     {
@@ -60,6 +73,8 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
+     * Sends a http request to a payment gateway end-point.
+     *
      * @throws TransportExceptionInterface
      */
     protected function doRequest(): HttpResponse
@@ -75,6 +90,8 @@ abstract class AbstractRequest implements RequestInterface
 
     /**
      * @return array{body: mixed}
+     *
+     * @see static::doRequest()
      */
     protected function getHttpRequestOptions(): array
     {
@@ -102,8 +119,18 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
+     * Validates the request parameters.
+     *
+     * Example:
+     *
+     *     public function validate(): void
+     *     {
+     *        $this->validateParameters('order_id', 'amount');
+     *     }
+     *
      * @param string ...$args Parameter keys to validate.
      * @throws RequestParameterRequiredException The required parameter value is not set.
+     * @see static::validate()
      */
     public function validateParameters(string ...$args): void
     {
