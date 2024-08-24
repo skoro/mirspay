@@ -44,7 +44,7 @@ class PaymentController extends AbstractController
         return $this->json($gatewayCollection);
     }
 
-    #[Route('/{order_uuid}/handler', name: 'callback_handler', format: 'json')]
+    #[Route('/{order_uuid}/handler', name: 'callback_handler', methods: 'POST', format: 'json')]
     public function paymentCallbackHandler(
         #[MapEntity(mapping: ['order_uuid' => 'uuid'])] Order $order,
         Request $request,
@@ -76,7 +76,7 @@ class PaymentController extends AbstractController
         return new Response();
     }
 
-    #[Route('/{order_uuid}/status', name: 'status', format: 'json')]
+    #[Route('/{order_uuid}/status', name: 'status', methods: 'GET', format: 'json')]
     public function getPaymentStatus(
         #[MapEntity(mapping: ['order_uuid' => 'uuid'])] Order $order,
     ): JsonResponse {

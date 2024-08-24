@@ -79,7 +79,7 @@ class OrderController extends AbstractController
         ], status: Response::HTTP_CREATED);
     }
 
-    #[Route('/{uuid}/status', name: 'status', format: 'json')]
+    #[Route('/{uuid}/status', name: 'status', methods: 'GET', format: 'json')]
     public function getStatus(Order $order): JsonResponse
     {
         return $this->json([
