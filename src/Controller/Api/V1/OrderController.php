@@ -14,6 +14,7 @@ use App\Payment\Common\Exception\PaymentGatewayIsNotRegisteredException;
 use App\Payment\PaymentGatewayRegistryInterface;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,9 +80,10 @@ class OrderController extends AbstractController
         ], status: Response::HTTP_CREATED);
     }
 
-    #[Route('/{uuid}/status', name: 'status', methods: 'GET', format: 'json')]
-    public function getStatus(Order $order): JsonResponse
-    {
+    #[Route('/{order_uuid}/status', name: 'status', methods: 'GET', format: 'json')]
+    public function getStatus(
+        #[MapEntity(mapping: ['order_uuid' => 'uuid'])] Order $order,
+    ): JsonResponse {
         return $this->json([
             'order_status' => $order->getStatus(),
         ]);
