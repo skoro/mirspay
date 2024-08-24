@@ -8,16 +8,9 @@ framework:
             # async: '%env(MESSENGER_TRANSPORT_DSN)%'
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
-            payments:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-#                options:
-#                    queue_name: payments
 
         routing:
-#            App\Message\ProcessPaymentCallback: payments
             # Route your messages to the transports
-            # 'App\Message\YourMessage': async
-#            'App\Message\OrderWasReceived': payments
 
 # when@test:
 #    framework:

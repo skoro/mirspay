@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240817153423 extends AbstractMigration
+final class Version20240824082405 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -51,10 +51,11 @@ final class Version20240817153423 extends AbstractMigration
         $this->addSql('CREATE TABLE payment_processing (
           id INT AUTO_INCREMENT NOT NULL,
           order_id INT NOT NULL,
-          handler VARCHAR(255) NOT NULL,
-          message VARCHAR(255) DEFAULT NULL,
-          request JSON DEFAULT NULL,
-          response JSON DEFAULT NULL,
+          request_name VARCHAR(255) DEFAULT NULL,
+          request_params JSON DEFAULT NULL,
+          response_name VARCHAR(255) DEFAULT NULL,
+          response_data JSON DEFAULT NULL,
+          response_success TINYINT(1) NOT NULL,
           created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\',
           INDEX IDX_BD9A2AFE8D9F6D38 (order_id),
           PRIMARY KEY(id)

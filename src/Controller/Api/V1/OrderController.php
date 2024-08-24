@@ -7,8 +7,9 @@ namespace App\Controller\Api\V1;
 use App\Dto\OrderDto;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
-use App\Message\PurchaseOrder;
+use App\Entity\OrderStatus;
 use App\Order\OrderTotalAmountCalculator;
+use App\Order\Workflow\OrderWorkflowFactory;
 use App\Payment\Common\Exception\PaymentGatewayIsNotRegisteredException;
 use App\Payment\PaymentGatewayRegistryInterface;
 use App\Repository\OrderRepository;
@@ -18,7 +19,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -32,7 +32,7 @@ class OrderController extends AbstractController
         EntityManagerInterface          $entityManager,
         OrderRepository                 $orderRepository,
         PaymentGatewayRegistryInterface $paymentGatewayRegistry,
-        MessageBusInterface             $messageBus,
+        OrderWorkflowFactory            $orderWorkflowFactory,
     ): JsonResponse {
         // Cannot accept a new order with existent external order id and payment gateway.
         $existOrder = $orderRepository->findByExternalOrderIdAndPaymentGateway($orderDto->orderNum, $orderDto->paymentGateway);
@@ -66,7 +66,9 @@ class OrderController extends AbstractController
 
         $paymentRedirectResponse = $purchaseRequest->send();
 
-        $messageBus->dispatch(new PurchaseOrder($paymentRedirectResponse, $order->getId()));
+        $orderWorkflowFactory
+            ->createFromContext($order, $purchaseRequest, $paymentRedirectResponse)
+            ->setState(OrderStatus::PAYMENT_PENDING);
 
         return $this->json([
             'order' => $order->getUuid(),

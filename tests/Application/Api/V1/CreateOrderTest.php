@@ -91,17 +91,10 @@ final class CreateOrderTest extends WebTestCase
             ->method('getGatewayById')
             ->willReturn($this->makePaymentGatewayStub('foo', 'foo'));
 
-        $messageBus = $this->createMock(MessageBusInterface::class);
-        $messageBus
-            ->expects($this->once())
-            ->method('dispatch')
-            ->willReturn(new Envelope(new \stdClass()));
-
         $client = self::createClient();
 
         self::getContainer()->set(PaymentGatewayRegistry::class, $paymentGatewayRegistry);
         self::getContainer()->set(OrderRepository::class, $orderRepository);
-        self::getContainer()->set(MessageBusInterface::class, $messageBus);
 
         $client->jsonRequest('POST' ,'/api/v1/order', $data);
         $response = $client->getResponse();
