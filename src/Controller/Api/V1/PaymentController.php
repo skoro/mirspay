@@ -7,6 +7,9 @@ namespace App\Controller\Api\V1;
 use App\Dto\PaymentGatewayDto;
 use App\Entity\Order;
 use App\Entity\OrderStatus;
+use App\Event\AfterPaymentCallbackHandlerEvent;
+use App\Event\BeforePaymentCallbackHandlerEvent;
+use App\Event\PaymentStatusEvent;
 use App\Order\Workflow\OrderWorkflowFactory;
 use App\Payment\Common\GatewayInterface;
 use App\Payment\PaymentGatewayRegistry;
@@ -16,12 +19,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route('/api/v1/payment', name: 'api_v1_payment_')]
 class PaymentController extends AbstractController
 {
     public function __construct(
         private readonly PaymentGatewayRegistry $paymentGatewayRegistry,
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -47,16 +52,26 @@ class PaymentController extends AbstractController
     ): Response {
         $paymentGateway = $this->paymentGatewayRegistry->getGatewayById($order->getPaymentGateway());
 
-        $serverCallbackHandler = $paymentGateway->getServerCallbackHandler();
-        $response = $serverCallbackHandler->handleCallback($request->getContent(), $request->headers->all());
+        $event = $this->eventDispatcher->dispatch(new BeforePaymentCallbackHandlerEvent(
+            content: $request->getContent(),
+            headers: $request->headers->all(),
+            paymentGateway: $paymentGateway,
+            order: $order,
+        ));
 
-        $workflow = $orderWorkflowFactory->createFromContext($order, null, $response);
+        $serverCallbackHandler = $event->paymentGateway->getServerCallbackHandler();
+
+        $response = $serverCallbackHandler->handleCallback($event->content, $event->headers);
+
+        $workflow = $orderWorkflowFactory->createFromContext($order, response: $response);
 
         if ($response->isSuccessful()) {
             $workflow->setState(OrderStatus::PAYMENT_RECEIVED);
         } else {
             $workflow->setState(OrderStatus::PAYMENT_FAILED);
         }
+
+        $this->eventDispatcher->dispatch(new AfterPaymentCallbackHandlerEvent($order, $response));
 
         return new Response();
     }
@@ -71,7 +86,8 @@ class PaymentController extends AbstractController
 
         $statusResponse = $paymentStatusRequest->send();
 
-        // TODO: message "new PaymentStatusWasReceived($order->getId(), $statusResponse)"
+        $event = $this->eventDispatcher->dispatch(new PaymentStatusEvent($order, $statusResponse));
+        $statusResponse = $event->paymentStatusResponse;
 
         return $this->json([
             'payment_gateway' => $paymentGateway->getId(),
