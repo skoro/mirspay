@@ -21,7 +21,8 @@ final readonly class PaymentGatewayDto
         public string $name,
 
         #[OA\Property(description: 'When test mode is positive, no real payments done.')]
-        #[SerializedName('test_mode')] public bool $isTestMode,
+        #[SerializedName('test_mode')]
+        public bool $isTestMode,
     ) {
     }
 

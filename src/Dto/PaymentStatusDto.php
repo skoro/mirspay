@@ -14,15 +14,17 @@ use OpenApi\Attributes as OA;
 final readonly class PaymentStatusDto
 {
     public function __construct(
-
         #[OA\Property(description: 'Payment gateway id.')]
-        #[SerializedName('payment_gateway')] public string $paymentGatewayId,
+        #[SerializedName('payment_gateway')]
+        public string $paymentGatewayId,
 
         #[OA\Property(description: 'Transaction result.')]
-        #[SerializedName('success')] public bool $isSuccess,
+        #[SerializedName('success')]
+        public bool $isSuccess,
 
         #[OA\Property(description: 'Transaction id from the payment gateway side.')]
-        #[SerializedName('transaction_id')] public string $transactionId,
+        #[SerializedName('transaction_id')]
+        public string $transactionId,
 
         #[OA\Property(description: 'An error message.')]
         public string $message,
