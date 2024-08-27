@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1;
 
 use App\Dto\PaymentGatewayDto;
+use App\Dto\PaymentStatusDto;
 use App\Entity\Order;
 use App\Entity\OrderStatus;
 use App\Event\AfterPaymentCallbackHandlerEvent;
@@ -13,6 +14,8 @@ use App\Event\PaymentStatusEvent;
 use App\Order\Workflow\OrderWorkflowFactory;
 use App\Payment\Common\GatewayInterface;
 use App\Payment\PaymentGatewayRegistry;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,6 +33,12 @@ class PaymentController extends AbstractController
     ) {
     }
 
+    #[OA\Get(description: 'Get the available payment gateways.')]
+    #[OA\Response(
+        response: 200,
+        description: 'A list of available payment gateways.',
+        content: new Model(type: PaymentGatewayDto::class),
+    )]
     #[Route('/gateways', name: 'gateways', methods: 'GET', format: 'json')]
     public function getAvailableGateways(): JsonResponse
     {
@@ -44,7 +53,14 @@ class PaymentController extends AbstractController
         return $this->json($gatewayCollection);
     }
 
-    #[Route('/{order_uuid}/handler', name: 'callback_handler', format: 'json')]
+    #[OA\Post(
+        description: 'Payment callback handler invoked by the payment gateway.',
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'Successful handled.',
+    )]
+    #[Route('/{order_uuid}/handler', name: 'callback_handler', methods: 'POST', format: 'json')]
     public function paymentCallbackHandler(
         #[MapEntity(mapping: ['order_uuid' => 'uuid'])] Order $order,
         Request $request,
@@ -76,7 +92,17 @@ class PaymentController extends AbstractController
         return new Response();
     }
 
-    #[Route('/{order_uuid}/status', name: 'status', format: 'json')]
+    #[OA\Get(description: 'Get a payment status of the provided order from the payment gateway.')]
+    #[OA\Response(
+        response: 200,
+        description: 'Order payment status.',
+        content: new Model(type: PaymentStatusDto::class),
+    )]
+    #[OA\Response(
+        response: 404,
+        description: 'Order not found.',
+    )]
+    #[Route('/{order_uuid}/status', name: 'status', methods: 'GET', format: 'json')]
     public function getPaymentStatus(
         #[MapEntity(mapping: ['order_uuid' => 'uuid'])] Order $order,
     ): JsonResponse {
@@ -89,13 +115,6 @@ class PaymentController extends AbstractController
         $event = $this->eventDispatcher->dispatch(new PaymentStatusEvent($order, $statusResponse));
         $statusResponse = $event->paymentStatusResponse;
 
-        return $this->json([
-            'payment_gateway' => $paymentGateway->getId(),
-            'success' => $statusResponse->isSuccessful(),
-            'transaction_id' => $statusResponse->getTransactionId(),
-            'message' => $statusResponse->getMessage(),
-            'code' => $statusResponse->getCode(),
-            'data' => $statusResponse,
-        ]);
+        return $this->json(PaymentStatusDto::makeFromResponse($paymentGateway->getId(), $statusResponse));
     }
 }

@@ -14,6 +14,8 @@ use App\Payment\Common\Exception\PaymentGatewayIsNotRegisteredException;
 use App\Payment\PaymentGatewayRegistryInterface;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,8 +27,23 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 #[Route('/api/v1/order', name: 'api_v1_order_')]
 class OrderController extends AbstractController
 {
-    #[Route('', name: 'create', methods: 'POST', format: 'json')]
-    public function index(
+    #[OA\Post(
+        description: 'Purchase order.',
+    )]
+    #[OA\Response(
+        response: 201,
+        description: 'Order is added to the service and waiting for payment gateway callback.',
+    )]
+    #[OA\Response(
+        response: 409,
+        description: 'Order with same order number and payment gateway has been already added.',
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'Specified payment gateway is not available.',
+    )]
+    #[Route('', name: 'purchase', methods: 'POST', format: 'json')]
+    public function purchaseOrder(
         #[MapRequestPayload] OrderDto   $orderDto,
         OrderTotalAmountCalculator      $orderAmountCalculator,
         EntityManagerInterface          $entityManager,
@@ -73,15 +90,38 @@ class OrderController extends AbstractController
         return $this->json([
             'order' => $order->getUuid(),
             'status_check' => $this->generateUrl('api_v1_order_status', [
-                'uuid' => $order->getUuid(),
+                'order_uuid' => $order->getUuid(),
             ], referenceType: UrlGeneratorInterface::ABSOLUTE_URL),
             'payment_redirect_url' => $paymentRedirectResponse->getRedirectUrl(),
         ], status: Response::HTTP_CREATED);
     }
 
-    #[Route('/{uuid}/status', name: 'status', format: 'json')]
-    public function getStatus(Order $order): JsonResponse
-    {
+    #[OA\Get(
+        description: 'Get order status.',
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'Order status.',
+        content: new OA\JsonContent(
+            properties: [
+                new OA\Property(
+                    property: 'order_status',
+                    description: 'Order status, one of "created", "payment_pending", "payment_received", "payment_failed"',
+                    type: 'string',
+                    example: '"payment_pending"',
+                ),
+            ],
+            type: 'object',
+        ),
+    )]
+    #[OA\Response(
+        response: 404,
+        description: 'Order not found.',
+    )]
+    #[Route('/{order_uuid}/status', name: 'status', methods: 'GET', format: 'json')]
+    public function getOrderStatus(
+        #[MapEntity(mapping: ['order_uuid' => 'uuid'])] Order $order,
+    ): JsonResponse {
         return $this->json([
             'order_status' => $order->getStatus(),
         ]);
