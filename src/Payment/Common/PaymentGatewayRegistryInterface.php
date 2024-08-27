@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Payment\Common;
 
 use App\Payment\Common\Exception\PaymentGatewayIsNotRegisteredException;
-use App\Payment\LiqPay\Gateway;
 use IteratorAggregate;
 
 /**
@@ -23,7 +22,7 @@ interface PaymentGatewayRegistryInterface extends IteratorAggregate
     /**
      * @param non-empty-string $gatewayId
      * @throws PaymentGatewayIsNotRegisteredException The gateway is not registered.
-     * @see Gateway::getId()
+     * @see GatewayInterface::getId()
      */
     public function getGatewayById(string $gatewayId): GatewayInterface;
 }
