@@ -11,7 +11,7 @@ use App\Entity\OrderStatus;
 use App\Order\OrderTotalAmountCalculator;
 use App\Order\Workflow\OrderWorkflowFactory;
 use App\Payment\Common\Exception\PaymentGatewayIsNotRegisteredException;
-use App\Payment\PaymentGatewayRegistryInterface;
+use App\Payment\Common\PaymentGatewayRegistryInterface;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use OpenApi\Attributes as OA;

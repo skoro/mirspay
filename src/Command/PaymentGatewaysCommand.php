@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Payment\Common\GatewayInterface;
-use App\Payment\PaymentGatewayRegistry;
+use App\Payment\Common\PaymentGatewayRegistryInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class PaymentGatewaysCommand extends Command
 {
     public function __construct(
-        private readonly PaymentGatewayRegistry $paymentGateways,
+        private readonly PaymentGatewayRegistryInterface $paymentGateways,
     ) {
         parent::__construct();
     }

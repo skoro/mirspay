@@ -13,7 +13,7 @@ use App\Event\BeforePaymentCallbackHandlerEvent;
 use App\Event\PaymentStatusEvent;
 use App\Order\Workflow\OrderWorkflowFactory;
 use App\Payment\Common\GatewayInterface;
-use App\Payment\PaymentGatewayRegistry;
+use App\Payment\Common\PaymentGatewayRegistryInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -28,7 +28,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class PaymentController extends AbstractController
 {
     public function __construct(
-        private readonly PaymentGatewayRegistry $paymentGatewayRegistry,
+        private readonly PaymentGatewayRegistryInterface $paymentGatewayRegistry,
         private readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
