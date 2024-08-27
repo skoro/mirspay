@@ -36,3 +36,9 @@ _TBD: make docker installation_
     symfony serve -d
     ```
    
+## API documentation
+ Two end-points are available for getting the API documentation:
+ - `/api/doc` swagger ui. 
+ - `/api/doc.json`
+    as above but in Json format
+    for consuming by [Postman](https://www.postman.com/product/what-is-postman/), for example.
