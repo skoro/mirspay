@@ -90,7 +90,7 @@ class OrderController extends AbstractController
         return $this->json([
             'order' => $order->getUuid(),
             'status_check' => $this->generateUrl('api_v1_order_status', [
-                'uuid' => $order->getUuid(),
+                'order_uuid' => $order->getUuid(),
             ], referenceType: UrlGeneratorInterface::ABSOLUTE_URL),
             'payment_redirect_url' => $paymentRedirectResponse->getRedirectUrl(),
         ], status: Response::HTTP_CREATED);
