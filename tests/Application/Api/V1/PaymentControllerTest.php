@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Application\Api\V1;
 
-use App\Payment\PaymentGatewayRegistry;
+use App\Payment\Common\PaymentGatewayRegistry;
 use App\Tests\Concerns\WithPaymentGateway;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

@@ -2,14 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Payment;
+namespace App\Payment\Common;
 
 use App\Payment\Common\Exception\PaymentGatewayIsNotRegisteredException;
-use App\Payment\Common\GatewayInterface;
 use ArrayIterator;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Traversable;
 
+/**
+ * The implementation of Payment gateway registry.
+ *
+ * A payment gateway could be registered by adding `app.payment.gateway` tag in `services.yml` configuration:
+ *
+ *      services:
+ *        App\Custom\PaymentGateway\MyGateway:
+ *          tags: ['app.payment.gateway']
+ */
 final readonly class PaymentGatewayRegistry implements PaymentGatewayRegistryInterface
 {
     /**

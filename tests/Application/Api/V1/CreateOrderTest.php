@@ -6,14 +6,12 @@ namespace App\Tests\Application\Api\V1;
 
 use App\Entity\Order;
 use App\Payment\Common\Exception\PaymentGatewayIsNotRegisteredException;
-use App\Payment\PaymentGatewayRegistry;
-use App\Payment\PaymentGatewayRegistryInterface;
+use App\Payment\Common\PaymentGatewayRegistry;
+use App\Payment\Common\PaymentGatewayRegistryInterface;
 use App\Repository\OrderRepository;
 use App\Tests\Concerns\WithOrderPostData;
 use App\Tests\Concerns\WithPaymentGateway;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Messenger\Envelope;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 
 final class CreateOrderTest extends WebTestCase
