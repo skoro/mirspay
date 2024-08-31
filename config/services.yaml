@@ -36,3 +36,7 @@ services:
     App\Order\OrderTotalAmountCalculator:
         arguments:
             $currencyCode: 'UAH'
+
+    App\Subscriber\Notification\HttpNotificationHandler:
+        tags:
+            - { name: 'app.subscriber.notification', type: 'http' }
