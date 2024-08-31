@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Action\Exception;
+namespace App\Subscriber\Exception;
 
 use Exception;
 

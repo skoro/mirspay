@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Action\AddHttpSubscriberAction;
 use App\Entity\OrderStatus;
+use App\Subscriber\Action\AddHttpSubscriberAction;
 use Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

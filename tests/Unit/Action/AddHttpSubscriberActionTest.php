@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Action;
 
-use App\Action\AddHttpSubscriberAction;
-use App\Action\Exception\SubscriberExistsException;
 use App\Entity\OrderStatus;
 use App\Repository\SubscriberRepository;
+use App\Subscriber\Action\AddHttpSubscriberAction;
+use App\Subscriber\Exception\SubscriberExistsException;
 use App\Tests\Concerns\WithFaker;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Action;
+namespace App\Subscriber\Action;
 
-use App\Action\Exception\SubscriberExistsException;
 use App\Entity\NotificationType;
 use App\Entity\OrderStatus;
 use App\Entity\Subscriber;
 use App\Repository\SubscriberRepository;
+use App\Subscriber\Exception\SubscriberExistsException;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 

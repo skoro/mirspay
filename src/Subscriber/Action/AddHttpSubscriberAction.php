@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Action;
+namespace App\Subscriber\Action;
 
 use App\Entity\NotificationType;
 use App\Entity\OrderStatus;

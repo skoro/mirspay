@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Action\AddHttpSubscriberAction;
 use App\Entity\OrderStatus;
 use App\Entity\Subscriber;
+use App\Subscriber\Action\AddHttpSubscriberAction;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

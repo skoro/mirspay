@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Application\Command\Subscribers;
 
-use App\Action\AddHttpSubscriberAction;
 use App\Entity\OrderStatus;
 use App\Repository\SubscriberRepository;
+use App\Subscriber\Action\AddHttpSubscriberAction;
 use App\Tests\Application\Command\AbstractCommandTest;
 use App\Tests\Concerns\WithFaker;
 use Symfony\Component\Console\Tester\CommandTester;
