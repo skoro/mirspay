@@ -7,22 +7,27 @@ namespace App\Order\Workflow;
 use App\Entity\Order;
 use App\Entity\OrderStatus;
 use App\Entity\PaymentProcessing;
+use App\Event\OrderStatusWasChanged;
 use App\Payment\Common\Message\RequestInterface;
 use App\Payment\Common\Message\ResponseInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
-class OrderWorkflow
+final readonly class OrderWorkflow implements OrderWorkflowInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly Order $order,
-        private readonly RequestInterface | null $request,
-        private readonly ResponseInterface | null $response,
+        private EntityManagerInterface $em,
+        private EventDispatcherInterface $eventDispatcher,
+        private Order $order,
+        private RequestInterface | null $request,
+        private ResponseInterface | null $response,
     ) {
     }
 
     public function setState(OrderStatus $orderStatus): void
     {
+        $previousStatus = $this->order->getStatus();
+
         $this->order->setStatus($orderStatus);
         $this->em->persist($this->order);
 
@@ -34,5 +39,19 @@ class OrderWorkflow
         $this->em->persist($paymentProcessing);
 
         $this->em->flush();
+
+        $this->dispatchOrderStatusEvent($previousStatus, $paymentProcessing);
+    }
+
+    private function dispatchOrderStatusEvent(OrderStatus $previousStatus, PaymentProcessing $paymentProcessing): void
+    {
+        $event = new OrderStatusWasChanged(
+            previousStatus: $previousStatus,
+            order: $this->order,
+            paymentProcessing: $paymentProcessing,
+            response: $this->response,
+        );
+
+        $this->eventDispatcher->dispatch($event, OrderStatusWasChanged::NAME);
     }
 }

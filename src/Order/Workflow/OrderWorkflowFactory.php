@@ -8,11 +8,13 @@ use App\Entity\Order;
 use App\Payment\Common\Message\RequestInterface;
 use App\Payment\Common\Message\ResponseInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class OrderWorkflowFactory
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -20,7 +22,7 @@ class OrderWorkflowFactory
         Order $order,
         RequestInterface | null $request = null,
         ResponseInterface | null $response = null,
-    ): OrderWorkflow {
-        return new OrderWorkflow($this->em, $order, $request, $response);
+    ): OrderWorkflowInterface {
+        return new OrderWorkflow($this->em, $this->eventDispatcher, $order, $request, $response);
     }
 }
