@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\OrderStatus;
+use App\Entity\Subscriber;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @extends ServiceEntityRepository<Subscriber>
+ */
+class SubscriberRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Subscriber::class);
+    }
+
+    public function hasSubscriber(string $hash): bool
+    {
+        $result = $this->createQueryBuilder('s')
+            ->where('s.hash = :hash')
+            ->setParameter('hash', $hash)
+            ->select('1')
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return (bool) $result;
+    }
+
+    /**
+     * @param OrderStatus|null $orderStatus Filter by order status.
+     * @return Subscriber[]
+     */
+    public function getList(?OrderStatus $orderStatus = null): array
+    {
+        $query = $this->createQueryBuilder('s');
+        if ($orderStatus) {
+            $query->where('s.orderStatus = :orderStatus');
+            $query->setParameter('orderStatus', $orderStatus);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    //    /**
+    //     * @return Subscriber[] Returns an array of Subscriber objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('s.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Subscriber
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
+}
