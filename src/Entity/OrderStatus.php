@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use BackedEnum;
+
 enum OrderStatus: string
 {
     case CREATED = 'created';
@@ -13,6 +15,6 @@ enum OrderStatus: string
 
     public static function formattedString(string $delimiter = ', '): string
     {
-        return implode($delimiter, array_map(fn ($enum) => $enum->value, self::cases()));
+        return implode($delimiter, array_map(fn (BackedEnum $enum): string => $enum->value, self::cases()));
     }
 }
