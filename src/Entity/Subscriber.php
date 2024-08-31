@@ -11,7 +11,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: SubscriberRepository::class)]
 #[ORM\Table(name: 'subscribers')]
-#[ORM\Index(columns: ['notify_type', 'order_status'])]
+#[ORM\Index(columns: ['order_status'])]
 class Subscriber
 {
     #[ORM\Id]
