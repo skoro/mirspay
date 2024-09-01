@@ -8,6 +8,7 @@ use App\Entity\Order;
 use App\Entity\Subscriber;
 use App\Payment\Common\Message\ResponseInterface;
 use App\Subscriber\Channel\NotificationChannelCollection;
+use App\Subscriber\Exception;
 
 class SendSubscriberNotificationAction
 {
@@ -16,6 +17,12 @@ class SendSubscriberNotificationAction
     ) {
     }
 
+    /**
+     * @throws Exception\NotificationChannelNotRegisteredException
+     * @throws Exception\NotificationChannelException
+     * @throws Exception\ChannelMessageNotRegistered
+     * @throws Exception\ChannelMessageException
+     */
     public function sendNotification(Subscriber $subscriber, Order $order, ResponseInterface $response): void
     {
         $channel = $this->notificationChannelCollection->getNotificationChannel($subscriber->getChannelType());
