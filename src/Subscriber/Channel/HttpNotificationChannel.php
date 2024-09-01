@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Subscriber\Channel;
 
-use App\Entity\Order;
-use App\Payment\Common\Message\ResponseInterface;
 use App\Subscriber\Exception\ChannelMessageException;
 use App\Subscriber\Exception\NotificationChannelException;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
