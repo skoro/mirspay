@@ -65,7 +65,7 @@ This is how to subscribe your external service when order status is changed to `
 console subscriber:add-http --order-status payment_received --channel-message simple https://backend.my-service.com/api/order-payment
 ```
 
-When the order status gets `payment_received` status due to payment gateway response,
+When the order gets `payment_received` status due to payment gateway response,
 a POST http request will be sent to https://backend.my-service.com/api/order-payment end point.
 The request will contain json data like this:
 ```json
