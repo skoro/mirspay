@@ -6,7 +6,7 @@ namespace App\Subscriber\Exception;
 
 use Exception;
 
-final class NotificationChannelNotRegisteredException extends Exception
+final class NotificationChannelNotRegisteredException extends NotificationChannelException
 {
     public function __construct(
         public readonly string $notificationChannelType,

@@ -6,6 +6,6 @@ namespace App\Subscriber\Exception;
 
 use Exception;
 
-class ChannelMessageException extends Exception
+class NotificationChannelException extends Exception
 {
 }

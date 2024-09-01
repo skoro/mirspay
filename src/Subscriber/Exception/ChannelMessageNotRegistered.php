@@ -6,7 +6,7 @@ namespace App\Subscriber\Exception;
 
 use Exception;
 
-final class ChannelMessageNotRegistered extends Exception
+final class ChannelMessageNotRegistered extends ChannelMessageException
 {
     public function __construct(
         public readonly string $channelMessageType,

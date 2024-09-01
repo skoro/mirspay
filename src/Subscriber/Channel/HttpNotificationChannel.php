@@ -6,6 +6,9 @@ namespace App\Subscriber\Channel;
 
 use App\Entity\Order;
 use App\Payment\Common\Message\ResponseInterface;
+use App\Subscriber\Exception\ChannelMessageException;
+use App\Subscriber\Exception\NotificationChannelException;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final readonly class HttpNotificationChannel implements NotificationChannelInterface
@@ -19,18 +22,34 @@ final readonly class HttpNotificationChannel implements NotificationChannelInter
     }
 
     /**
-     * @param Order $order
-     * @param ResponseInterface $response
      * @param array{url: string, method: string} $params
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     *
+     * @throws TransportExceptionInterface
+     * @throws NotificationChannelException
+     * @throws ChannelMessageException
      */
     public function send(ChannelMessageInterface $message, array $params): void
     {
         $url = $params['url'] ?? '';
-        $method = $params['method'] ?? '';
+        $method = $this->getHttpMethod($params);
 
         $this->httpClient->request($method, $url, [
-            'json' => [],
+            'json' => $message->getData(),
         ]);
+    }
+
+    /**
+     * @param array{method: string} $params
+     * @throws NotificationChannelException
+     */
+    private function getHttpMethod(array $params): string
+    {
+        $method = (string) ($params['method'] ?? self::DEFAULT_HTTP_METHOD);
+
+        if (! in_array($method, self::HTTP_METHODS)) {
+            throw new NotificationChannelException("Http method \"$method\" is not allowed.");
+        }
+
+        return $method;
     }
 }
