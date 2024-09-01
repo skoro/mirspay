@@ -6,11 +6,12 @@ namespace App\Tests\Application\Command\Subscribers;
 
 use App\Entity\OrderStatus;
 use App\Repository\SubscriberRepository;
+use App\Subscriber\Channel\NotificationChannelCollection;
 use App\Tests\Application\Command\AbstractCommandTest;
 use App\Tests\Concerns\WithFaker;
 use Symfony\Component\Console\Tester\CommandTester;
 
-final class AddSubscriberCommandTest extends AbstractCommandTest
+final class AddHttpCommandTest extends AbstractCommandTest
 {
     use WithFaker;
 
@@ -20,15 +21,28 @@ final class AddSubscriberCommandTest extends AbstractCommandTest
         $httpMethod = 'PUT';
         $orderStatus = OrderStatus::PAYMENT_PENDING;
 
+        $channelCollection = $this->createMock(NotificationChannelCollection::class);
+        $channelCollection
+            ->expects($this->once())
+            ->method('getNotificationChannelTypes')
+            ->willReturn(['http']);
+        $channelCollection
+            ->expects($this->once())
+            ->method('getMessageTypes')
+            ->willReturn(['test']);
+
+        $this->getContainer()->set(NotificationChannelCollection::class, $channelCollection);
+
         $command = $this->application->find('subscriber:add-http');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'url' => $url,
+            '--channel-message' => 'test',
             '--order-status' => $orderStatus->value,
             '--http-method' => $httpMethod,
         ]);
 
-        $commandTester->assertCommandIsSuccessful();
+        $commandTester->assertCommandIsSuccessful($commandTester->getDisplay());
 
         $display = $commandTester->getDisplay();
 

@@ -62,8 +62,9 @@ final class SubscriberGetCommand extends Command
             foreach ($subscribers as $subscriber) {
                 $io->title($subscriber->getUuid()->toRfc4122());
                 $io->block([
-                    'Type: ' . $subscriber->getNotifyType()->value,
                     'Order status: ' . $subscriber->getOrderStatus()->value,
+                    'Channel: ' . $subscriber->getChannelType(),
+                    'Message: ' . $subscriber->getChannelMessage(),
                     'Added: ' . $subscriber->getCreatedAt()->format('Y-m-d H:i:s'),
                     'Parameters: ' . json_encode($subscriber->getParams(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
                 ]);

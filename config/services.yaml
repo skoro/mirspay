@@ -37,6 +37,10 @@ services:
         arguments:
             $currencyCode: 'UAH'
 
-    App\Subscriber\Notification\HttpNotificationHandler:
+    App\Subscriber\Channel\HttpNotificationChannel:
         tags:
-            - { name: 'app.subscriber.notification', type: 'http' }
+            - { name: 'app.subscriber.channel', type: 'http' }
+
+    App\Subscriber\Channel\SimpleArrayChannelMessage:
+        tags:
+            - { name: 'app.subscriber.message', type: 'simple' }

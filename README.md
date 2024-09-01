@@ -37,8 +37,18 @@ _TBD: make docker installation_
     ```
    
 ## API documentation
- Two end-points are available for getting the API documentation:
+Two end-points are available for getting the API documentation:
  - `/api/doc` swagger ui. 
  - `/api/doc.json`
     as above but in Json format
     for consuming by [Postman](https://www.postman.com/product/what-is-postman/), for example.
+
+## Order status notifications
+When order status is changed, a notification of that change can be sent. 
+Notifications are sent via predefined channels. To get a list of the available channels,
+use command `subscriber:channels`.
+
+Subscribe to notifications via `http` channel and order status `payment_received`:
+```shell
+console subscriber:add-http --order-status payment_received https://backend.my-service.com/api/order-payment
+```

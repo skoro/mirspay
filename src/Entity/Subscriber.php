@@ -26,10 +26,13 @@ class Subscriber
     private ?string $hash = null;
 
     #[ORM\Column(length: 255)]
-    private ?NotificationType $notifyType = null;
+    private ?string $channelType = null;
 
     #[ORM\Column(enumType: OrderStatus::class)]
     private ?OrderStatus $orderStatus = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $channelMessage = null;
 
     #[ORM\Column]
     private array $params = [];
@@ -57,9 +60,9 @@ class Subscriber
         return $this->hash;
     }
 
-    public function getNotifyType(): ?NotificationType
+    public function getChannelType(): ?string
     {
-        return $this->notifyType;
+        return $this->channelType;
     }
 
     public function getOrderStatus(): ?OrderStatus
@@ -84,14 +87,14 @@ class Subscriber
      */
     public function generateHash(): string
     {
-        $this->hash = md5($this->notifyType->value . $this->orderStatus->value . serialize($this->params));
+        $this->hash = md5($this->channelType . $this->orderStatus->value . serialize($this->params));
 
         return $this->hash;
     }
 
-    public function setNotifyType(NotificationType $notifyType): void
+    public function setChannelType(string $channelType): void
     {
-        $this->notifyType = $notifyType;
+        $this->channelType = $channelType;
     }
 
     public function setOrderStatus(OrderStatus $orderStatus): void
@@ -107,5 +110,15 @@ class Subscriber
     public function setCreatedAtNow(): void
     {
         $this->createdAt = new DateTimeImmutable();
+    }
+
+    public function getChannelMessage(): ?string
+    {
+        return $this->channelMessage;
+    }
+
+    public function setChannelMessage(string $channelMessage): void
+    {
+        $this->channelMessage = $channelMessage;
     }
 }

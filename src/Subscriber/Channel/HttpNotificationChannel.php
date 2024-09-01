@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Subscriber\Notification;
+namespace App\Subscriber\Channel;
 
 use App\Entity\Order;
 use App\Payment\Common\Message\ResponseInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final readonly class HttpNotificationHandler implements NotificationHandlerInterface
+final readonly class HttpNotificationChannel implements NotificationChannelInterface
 {
+    public const array HTTP_METHODS = ['POST', 'PUT', 'PATCH'];
+    public const string DEFAULT_HTTP_METHOD = 'POST';
+
     public function __construct(
         private HttpClientInterface $httpClient,
     ) {
@@ -21,19 +24,13 @@ final readonly class HttpNotificationHandler implements NotificationHandlerInter
      * @param array{url: string, method: string} $params
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function send(Order $order, ResponseInterface $response, array $params): void
+    public function send(ChannelMessageInterface $message, array $params): void
     {
         $url = $params['url'] ?? '';
         $method = $params['method'] ?? '';
 
-        $data = [
-            'order_num' => $order->getExternalOrderId(),
-            'order_status' => $order->getStatus()->value,
-            'response' => $response,
-        ];
-
         $this->httpClient->request($method, $url, [
-            'json' => $data,
+            'json' => [],
         ]);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Command;
 
 use App\Entity\OrderStatus;
 use App\Subscriber\Action\AddHttpSubscriberAction;
+use App\Subscriber\Channel\HttpNotificationChannel;
 use Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,7 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'subscriber:add-http',
-    description: 'Add a order status notification subscriber of HTTP type.',
+    description: 'Add a subscriber of HTTP channel notification',
 )]
 final class SubscriberAddHttpCommand extends Command
 {
@@ -33,23 +34,26 @@ final class SubscriberAddHttpCommand extends Command
             ->addArgument('url', InputArgument::REQUIRED, 'Url to call.')
             ->addOption(
                 'http-method',
-                'm',
+                'X',
                 InputOption::VALUE_OPTIONAL,
-                'Http method: ' . $this->getAllowedHttpMethods(),
-                AddHttpSubscriberAction::DEFAULT_HTTP_METHOD,
+                'Http request method',
+                HttpNotificationChannel::DEFAULT_HTTP_METHOD,
             )
             ->addOption(
                 'order-status',
                 's',
                 InputOption::VALUE_REQUIRED,
-                'Expected order status: ' . OrderStatus::formattedString()
+                'Expected order status: ' . OrderStatus::formattedString(),
+                ''
+            )
+            ->addOption(
+                'channel-message',
+                'm',
+                InputOption::VALUE_REQUIRED,
+                'Channel message type (see output of "subscriber:channels" for available message types)',
+                ''
             )
         ;
-    }
-
-    private function getAllowedHttpMethods(): string
-    {
-        return implode(', ', AddHttpSubscriberAction::HTTP_METHODS);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -59,6 +63,7 @@ final class SubscriberAddHttpCommand extends Command
         $url = $input->getArgument('url');
         $httpMethod = $input->getOption('http-method');
         $orderStatusValue = $input->getOption('order-status');
+        $channelMessage = $input->getOption('channel-message');
 
         try {
             if (! ($orderStatus = OrderStatus::tryFrom($orderStatusValue))) {
@@ -70,7 +75,7 @@ final class SubscriberAddHttpCommand extends Command
                 );
             }
 
-            $subscriber = $this->addHttpSubscriberAction->add($orderStatus, $url, $httpMethod);
+            $subscriber = $this->addHttpSubscriberAction->add($orderStatus, $url, $channelMessage, $httpMethod);
 
             $io->success("Subscriber \"{$subscriber->getUuid()}\" has been added.");
         } catch (\Throwable $e) {

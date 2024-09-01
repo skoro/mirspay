@@ -32,6 +32,7 @@ class SubscriberFixture extends Fixture
         return $this->addHttpSubscriberAction->add(
             orderStatus: $orderStatus,
             url: $url,
+            channelMessage: 'simple',
             httpMethod: $httpMethod,
         );
     }

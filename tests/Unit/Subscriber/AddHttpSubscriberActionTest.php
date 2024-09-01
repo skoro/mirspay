@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Action;
+namespace App\Tests\Unit\Subscriber;
 
 use App\Entity\OrderStatus;
 use App\Repository\SubscriberRepository;
 use App\Subscriber\Action\AddHttpSubscriberAction;
+use App\Subscriber\Channel\NotificationChannelCollection;
 use App\Subscriber\Exception\SubscriberExistsException;
 use App\Tests\Concerns\WithFaker;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,11 +26,13 @@ final class AddHttpSubscriberActionTest extends TestCase
         $action = new AddHttpSubscriberAction(
             $this->createStub(EntityManagerInterface::class),
             $this->createStub(SubscriberRepository::class),
+            $this->createStub(NotificationChannelCollection::class),
         );
 
         $action->add(
             orderStatus: OrderStatus::PAYMENT_FAILED,
             url: '11111',
+            channelMessage: 'test',
         );
     }
 
@@ -49,9 +52,19 @@ final class AddHttpSubscriberActionTest extends TestCase
             ->method('hasSubscriber')
             ->willReturn(false);
 
-        $action = new AddHttpSubscriberAction($entityManager, $repository);
+        $channelCollection = $this->createMock(NotificationChannelCollection::class);
+        $channelCollection
+            ->expects($this->once())
+            ->method('getNotificationChannelTypes')
+            ->willReturn(['http']);
+        $channelCollection
+            ->expects($this->once())
+            ->method('getMessageTypes')
+            ->willReturn(['test']);
 
-        $action->add(OrderStatus::PAYMENT_RECEIVED, $this->faker()->url());
+        $action = new AddHttpSubscriberAction($entityManager, $repository, $channelCollection);
+
+        $action->add(OrderStatus::PAYMENT_RECEIVED, $this->faker()->url(), 'test');
     }
 
     public function testCannotAddSubscriberWithSameParameters(): void
@@ -70,12 +83,22 @@ final class AddHttpSubscriberActionTest extends TestCase
             ->method('hasSubscriber')
             ->willReturn(true);
 
-        $action = new AddHttpSubscriberAction($entityManager, $repository);
+        $channelCollection = $this->createMock(NotificationChannelCollection::class);
+        $channelCollection
+            ->expects($this->once())
+            ->method('getNotificationChannelTypes')
+            ->willReturn(['http']);
+        $channelCollection
+            ->expects($this->once())
+            ->method('getMessageTypes')
+            ->willReturn(['test1']);
+
+        $action = new AddHttpSubscriberAction($entityManager, $repository, $channelCollection);
 
         $this->expectException(SubscriberExistsException::class);
         $this->expectExceptionMessage('Subscriber with such parameters already exists');
 
-        $action->add(OrderStatus::PAYMENT_RECEIVED, $this->faker()->url());
+        $action->add(OrderStatus::PAYMENT_RECEIVED, $this->faker()->url(), 'test1');
     }
 
     public function testHttpMethodMustBeAllowed(): void
@@ -86,11 +109,13 @@ final class AddHttpSubscriberActionTest extends TestCase
         $action = new AddHttpSubscriberAction(
             $this->createStub(EntityManagerInterface::class),
             $this->createStub(SubscriberRepository::class),
+            $this->createStub(NotificationChannelCollection::class),
         );
 
         $action->add(
             orderStatus: OrderStatus::PAYMENT_FAILED,
             url: $this->faker()->url(),
+            channelMessage: 'foobar',
             httpMethod: 'TEST',
         );
     }
