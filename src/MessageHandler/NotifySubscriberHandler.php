@@ -36,6 +36,8 @@ final readonly class NotifySubscriberHandler
                 throw new EntityNotFoundException("Subscriber \"{$message->subscriberId}\" not found.");
             }
 
+            // TODO: check the order status and subscriber's expected order status.
+
             $this->sendSubscriberNotificationAction->sendNotification($order, $subscriber, $message->response);
         } catch (EntityNotFoundException|ChannelMessageNotRegistered|NotificationChannelNotRegisteredException $e) {
             $this->logger->error($e->getMessage());
