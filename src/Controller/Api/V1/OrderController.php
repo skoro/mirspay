@@ -8,6 +8,7 @@ use App\Dto\OrderDto;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
 use App\Entity\OrderStatus;
+use App\Event\OrderWasCreated;
 use App\Order\OrderTotalAmountCalculator;
 use App\Order\Workflow\OrderWorkflowFactory;
 use App\Payment\Common\Exception\PaymentGatewayIsNotRegisteredException;
@@ -23,10 +24,15 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route('/api/v1/order', name: 'api_v1_order_')]
 class OrderController extends AbstractController
 {
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
+    {
+    }
+
     #[OA\Post(
         description: 'Purchase order.',
     )]
@@ -74,6 +80,8 @@ class OrderController extends AbstractController
         }
 
         $entityManager->flush();
+
+        $this->eventDispatcher->dispatch(new OrderWasCreated($order));
 
         $purchaseRequest = $paymentGateway->getPurchaseRequestBuilder()->build($order);
 
