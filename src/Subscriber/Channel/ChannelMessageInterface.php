@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Subscriber\Channel;
 
-use App\Entity\Order;
-use App\Payment\Common\Message\ResponseInterface;
+use App\Entity\PaymentProcessing;
 use App\Subscriber\Exception\ChannelMessageException;
 
 /**
@@ -15,19 +14,12 @@ use App\Subscriber\Exception\ChannelMessageException;
  */
 interface ChannelMessageInterface
 {
-    public function setOrder(Order $order): void;
+    public function setPaymentProcessing(PaymentProcessing $paymentProcessing): void;
 
     /**
-     * @throws ChannelMessageException When order is not set.
+     * @throws ChannelMessageException When payment processing is not set.
      */
-    public function getOrder(): Order;
-
-    public function setResponse(ResponseInterface $response): void;
-
-    /**
-     * @throws ChannelMessageException When payment gateway response is not set.
-     */
-    public function getResponse(): ResponseInterface;
+    public function getPaymentProcessing(): PaymentProcessing;
 
     /**
      * Returns a data that will be transmitted by a channel.

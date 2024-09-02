@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Subscriber\Action;
 
-use App\Entity\Order;
+use App\Entity\PaymentProcessing;
 use App\Entity\Subscriber;
-use App\Payment\Common\Message\ResponseInterface;
 use App\Subscriber\Channel\NotificationChannelCollection;
 use App\Subscriber\Exception;
 
@@ -23,13 +22,12 @@ class SendSubscriberNotificationAction
      * @throws Exception\ChannelMessageNotRegistered
      * @throws Exception\ChannelMessageException
      */
-    public function sendNotification(Subscriber $subscriber, Order $order, ResponseInterface $response): void
+    public function sendNotification(Subscriber $subscriber, PaymentProcessing $paymentProcessing): void
     {
         $channel = $this->notificationChannelCollection->getNotificationChannel($subscriber->getChannelType());
         $message = $this->notificationChannelCollection->getMessage($subscriber->getChannelMessage());
 
-        $message->setOrder($order);
-        $message->setResponse($response);
+        $message->setPaymentProcessing($paymentProcessing);
 
         $channel->send($message, $subscriber->getParams());
     }

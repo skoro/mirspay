@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Subscriber;
 
 use App\Entity\Order;
+use App\Entity\PaymentProcessing;
 use App\Entity\Subscriber;
 use App\Payment\Common\Message\ResponseInterface;
 use App\Subscriber\Action\SendSubscriberNotificationAction;
@@ -30,10 +31,7 @@ final class SendSubscriberNotificationActionTest extends TestCase
         $message = $this->createMock(ChannelMessageInterface::class);
         $message
             ->expects($this->once())
-            ->method('setOrder');
-        $message
-            ->expects($this->once())
-            ->method('setResponse');
+            ->method('setPaymentProcessing');
 
         $channel = $this->createMock(NotificationChannelInterface::class);
         $channel
@@ -54,9 +52,10 @@ final class SendSubscriberNotificationActionTest extends TestCase
             ->willReturn($message);
 
         $order = new Order();
+        $paymentProcessing = new PaymentProcessing();
         $response = $this->createStub(ResponseInterface::class);
 
         $action = new SendSubscriberNotificationAction($channelCollection);
-        $action->sendNotification($subscriber, $order, $response);
+        $action->sendNotification($subscriber, $paymentProcessing);
     }
 }

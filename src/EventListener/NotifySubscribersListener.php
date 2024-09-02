@@ -25,11 +25,14 @@ final class NotifySubscribersListener
         $subscribers = $this->subscriberRepository->getList($event->order->getStatus());
 
         foreach ($subscribers as $subscriber) {
-            $this->messageBus->dispatch(new NotifySubscriber(
+            $message = new NotifySubscriber(
                 orderId: $event->order->getId(),
                 subscriberId: $subscriber->getId(),
-                response: $event->response,
-            ));
+                paymentProcessingId: $event->paymentProcessing->getId(),
+                transactionId: $event->response->getTransactionId(),
+                message: $event->response->getMessage(),
+            );
+            $this->messageBus->dispatch($message);
         }
     }
 }
