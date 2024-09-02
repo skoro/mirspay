@@ -73,6 +73,7 @@ The request will contain json data like this:
   "order_num": "1234567890",
   "order_status": "payment_received",
   "success": true,
+  "transaction_id": "1234567890",
   "response": {
     // original response from the payment gateway.
   }
