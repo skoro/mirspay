@@ -11,7 +11,7 @@ use App\Event\OrderStatusWasChanged;
 use App\Payment\Common\Message\RequestInterface;
 use App\Payment\Common\Message\ResponseInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final readonly class OrderWorkflow implements OrderWorkflowInterface
 {
@@ -52,6 +52,6 @@ final readonly class OrderWorkflow implements OrderWorkflowInterface
             response: $this->response,
         );
 
-        $this->eventDispatcher->dispatch($event, OrderStatusWasChanged::NAME);
+        $this->eventDispatcher->dispatch($event);
     }
 }

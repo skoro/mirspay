@@ -11,8 +11,6 @@ use App\Payment\Common\Message\ResponseInterface;
 
 final class OrderStatusWasChanged
 {
-    public const string NAME = 'order.status.changed';
-
     public function __construct(
         public readonly OrderStatus $previousStatus,
         public readonly Order $order,
