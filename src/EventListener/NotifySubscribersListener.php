@@ -30,7 +30,7 @@ final class NotifySubscribersListener
                 subscriberId: $subscriber->getId(),
                 paymentProcessingId: $event->paymentProcessing->getId(),
                 transactionId: $event->response->getTransactionId(),
-                message: $event->response->getMessage(),
+                responseMessage: $event->response->getMessage(),
             );
             $this->messageBus->dispatch($message);
         }
