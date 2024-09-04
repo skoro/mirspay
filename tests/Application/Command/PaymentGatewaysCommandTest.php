@@ -10,19 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-final class PaymentGatewaysCommandTest extends KernelTestCase
+final class PaymentGatewaysCommandTest extends AbstractCommandTest
 {
     use WithPaymentGateway;
-
-    private Application $application;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        self::bootKernel();
-        $this->application = new Application(self::$kernel);
-    }
 
     public function testCommandExecuteIsSuccessful(): void
     {

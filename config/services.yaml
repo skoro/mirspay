@@ -36,3 +36,11 @@ services:
     App\Order\OrderTotalAmountCalculator:
         arguments:
             $currencyCode: 'UAH'
+
+    App\Subscriber\Channel\HttpNotificationChannel:
+        tags:
+            - { name: 'app.subscriber.channel', type: 'http' }
+
+    App\Subscriber\Channel\SimpleArrayChannelMessage:
+        tags:
+            - { name: 'app.subscriber.message', type: 'simple' }

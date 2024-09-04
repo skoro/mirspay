@@ -32,7 +32,7 @@ class Order
     private ?string $externalOrderId = null;
 
     #[ORM\Column(type: 'uuid', unique: true)]
-    private ?Uuid $uuid = null;
+    private ?Uuid $uuid;
 
     #[ORM\Column(length: 16)]
     private ?string $paymentGateway = null;

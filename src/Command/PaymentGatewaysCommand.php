@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
     name: 'payment:gateways',
     description: 'List of available payment gateways',
 )]
-class PaymentGatewaysCommand extends Command
+final class PaymentGatewaysCommand extends Command
 {
     public function __construct(
         private readonly PaymentGatewayRegistryInterface $paymentGateways,
