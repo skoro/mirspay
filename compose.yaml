@@ -1,6 +1,15 @@
 version: '3'
 
 services:
+  app:
+    build:
+      context: ./docker/php
+    volumes:
+      - .:/var/www
+    depends_on:
+      - database
+    networks:
+      - mirspay
 ###> doctrine/doctrine-bundle ###
   database:
     image: 'mysql:8.0'
