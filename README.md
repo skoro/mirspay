@@ -16,8 +16,24 @@ via various gateways. Please, take a look at the picture below to get an idea ho
 * MySQL
 
 ## Install
-_TBD: make docker installation_
 
+### Docker
+Close the repository:
+```shell
+git clone https://github.com/skoro/mirspay.git
+```
+
+Build and up the image:
+```shell
+docker compose build
+docker compose run --rm app composer install
+docker compose up -d
+docker compose exec app php bin/console doctrine:migrations:migrate
+```
+
+### From source code
+
+Assume PHP, [Symfony CLI](https://symfony.com/download) and MySQL locally installed.
 1. Clone the repository:
     ```shell
     git clone https://github.com/skoro/mirspay.git
@@ -26,15 +42,26 @@ _TBD: make docker installation_
     ```shell
     composer install
     ```
-3. Edit the `.env` file and fill in the necessary variables and payment gateway credentials:
+3. Create `.env.local` file and fill in the database dsn:
     ```dotenv
-    LIQPAY_PUBLIC_KEY=
-    LIQPAY_PRIVATE_KEY=
+    DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8.0.32&charset=utf8mb4"
+   ```
+4. Apply migrations:
+    ```shell
+    symfony console doctrine:migrations:migrate
     ```
-4. Start the server.
+5. Start the server.
     ```shell
     symfony serve -d
     ```
+   
+### Payment Gateways configuration
+
+1. LiqPay public and private keys:
+   ```dotenv
+   LIQPAY_PUBLIC_KEY=
+   LIQPAY_PRIVATE_KEY=
+   ```
    
 ## API documentation
 Two end-points are available for getting the API documentation:
