@@ -33,7 +33,7 @@ docker compose exec app php bin/console doctrine:migrations:migrate
 
 ### From source code
 
-Assume PHP, [Symfony CLI](https://symfony.com/download) and MySQL locally installed.
+Assume PHP, [Symfony CLI](https://symfony.com/download) and MySQL are locally installed.
 1. Clone the repository:
     ```shell
     git clone https://github.com/skoro/mirspay.git
