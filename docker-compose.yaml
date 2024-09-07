@@ -5,6 +5,7 @@ services:
     build:
       context: ./docker/php
     volumes:
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - .:/var/www
     depends_on:
       - database
