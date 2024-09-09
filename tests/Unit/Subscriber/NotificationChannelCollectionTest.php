@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Subscriber;
+namespace Mirspay\Tests\Unit\Subscriber;
 
-use App\Subscriber\Channel\ChannelMessageInterface;
-use App\Subscriber\Channel\NotificationChannelCollection;
-use App\Subscriber\Channel\NotificationChannelInterface;
-use App\Subscriber\Exception\ChannelMessageNotRegistered;
-use App\Subscriber\Exception\NotificationChannelNotRegisteredException;
+use Mirspay\Subscriber\Channel\ChannelMessageInterface;
+use Mirspay\Subscriber\Channel\NotificationChannelCollection;
+use Mirspay\Subscriber\Channel\NotificationChannelInterface;
+use Mirspay\Subscriber\Exception\ChannelMessageNotRegistered;
+use Mirspay\Subscriber\Exception\NotificationChannelNotRegisteredException;
 use PHPUnit\Framework\TestCase;
 
 final class NotificationChannelCollectionTest extends TestCase

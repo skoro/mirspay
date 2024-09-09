@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Subscriber;
+namespace Mirspay\Tests\Unit\Subscriber;
 
-use App\Entity\OrderStatus;
-use App\Repository\SubscriberRepository;
-use App\Subscriber\Action\AddHttpSubscriberAction;
-use App\Subscriber\Channel\NotificationChannelCollection;
-use App\Subscriber\Exception\SubscriberExistsException;
-use App\Tests\Concerns\WithFaker;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
+use Mirspay\Entity\OrderStatus;
+use Mirspay\Repository\SubscriberRepository;
+use Mirspay\Subscriber\Action\AddHttpSubscriberAction;
+use Mirspay\Subscriber\Channel\NotificationChannelCollection;
+use Mirspay\Subscriber\Exception\SubscriberExistsException;
+use Mirspay\Tests\Concerns\WithFaker;
 use PHPUnit\Framework\TestCase;
 
 final class AddHttpSubscriberActionTest extends TestCase

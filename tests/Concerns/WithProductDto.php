@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Concerns;
+namespace Mirspay\Tests\Concerns;
 
-use App\Dto\ProductDto;
+use Mirspay\Dto\ProductDto;
 
 trait WithProductDto
 {

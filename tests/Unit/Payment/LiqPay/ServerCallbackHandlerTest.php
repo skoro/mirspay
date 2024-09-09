@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Payment\LiqPay;
+namespace Mirspay\Tests\Unit\Payment\LiqPay;
 
-use App\Payment\Common\Message\NullRequest;
-use App\Payment\LiqPay\Exception\InvalidResponseException;
-use App\Payment\LiqPay\Exception\InvalidResponseSignatureException;
-use App\Payment\LiqPay\Request\CheckoutRequest;
-use App\Payment\LiqPay\Request\MessageEncoder;
-use App\Payment\LiqPay\Response\MessageDecoder;
-use App\Payment\LiqPay\Response\PaymentStatusResponse;
-use App\Payment\LiqPay\Response\SignedMessage;
-use App\Payment\LiqPay\ServerCallbackHandler;
-use App\Payment\LiqPay\Signature;
+use Mirspay\Payment\Common\Message\NullRequest;
+use Mirspay\Payment\LiqPay\Exception\InvalidResponseException;
+use Mirspay\Payment\LiqPay\Exception\InvalidResponseSignatureException;
+use Mirspay\Payment\LiqPay\Request\CheckoutRequest;
+use Mirspay\Payment\LiqPay\Request\MessageEncoder;
+use Mirspay\Payment\LiqPay\Response\MessageDecoder;
+use Mirspay\Payment\LiqPay\Response\PaymentStatusResponse;
+use Mirspay\Payment\LiqPay\Response\SignedMessage;
+use Mirspay\Payment\LiqPay\ServerCallbackHandler;
+use Mirspay\Payment\LiqPay\Signature;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 

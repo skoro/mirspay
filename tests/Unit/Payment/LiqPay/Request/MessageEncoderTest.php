@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Payment\LiqPay\Request;
+namespace Mirspay\Tests\Unit\Payment\LiqPay\Request;
 
-use App\Payment\Common\Message\MessageInterface;
-use App\Payment\LiqPay\Request\MessageEncoder;
-use App\Tests\Concerns\WithFaker;
+use Mirspay\Payment\Common\Message\MessageInterface;
+use Mirspay\Payment\LiqPay\Request\MessageEncoder;
+use Mirspay\Tests\Concerns\WithFaker;
 use PHPUnit\Framework\TestCase;
 
 final class MessageEncoderTest extends TestCase

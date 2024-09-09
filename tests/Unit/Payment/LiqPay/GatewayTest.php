@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Payment\LiqPay;
+namespace Mirspay\Tests\Unit\Payment\LiqPay;
 
-use App\Payment\Common\Builder\CommonPurchaseRequestBuilder;
-use App\Payment\Common\Message\ServerCallbackHandlerInterface;
-use App\Payment\LiqPay\Gateway as LiqPayGateway;
-use App\Payment\LiqPay\Request\MessageEncoder;
-use App\Payment\LiqPay\Signature;
-use App\Tests\Concerns\WithFaker;
+use Mirspay\Payment\Common\Builder\CommonPurchaseRequestBuilder;
+use Mirspay\Payment\Common\Message\ServerCallbackHandlerInterface;
+use Mirspay\Payment\LiqPay\Gateway as LiqPayGateway;
+use Mirspay\Payment\LiqPay\Request\MessageEncoder;
+use Mirspay\Payment\LiqPay\Signature;
+use Mirspay\Tests\Concerns\WithFaker;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 

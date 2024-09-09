@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Payment\LiqPay\Response;
+namespace Mirspay\Tests\Unit\Payment\LiqPay\Response;
 
-use App\Payment\LiqPay\Exception\InvalidResponseException;
-use App\Payment\LiqPay\Exception\ResponseDecodeException;
-use App\Payment\LiqPay\Response\MessageDecoder;
-use App\Payment\LiqPay\Response\SignedMessage;
-use App\Tests\Concerns\WithFaker;
+use Mirspay\Payment\LiqPay\Exception\InvalidResponseException;
+use Mirspay\Payment\LiqPay\Exception\ResponseDecodeException;
+use Mirspay\Payment\LiqPay\Response\MessageDecoder;
+use Mirspay\Payment\LiqPay\Response\SignedMessage;
+use Mirspay\Tests\Concerns\WithFaker;
 use PHPUnit\Framework\TestCase;
 
 final class MessageDecoderTest extends TestCase

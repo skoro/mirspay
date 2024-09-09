@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Order;
+namespace Mirspay\Tests\Unit\Order;
 
-use App\Order\OrderTotalAmountCalculator;
-use App\Tests\Concerns\WithFaker;
-use App\Tests\Concerns\WithProductDto;
+use Mirspay\Tests\Concerns\WithFaker;
+use Mirspay\Tests\Concerns\WithProductDto;
+use Mirspay\Order\OrderTotalAmountCalculator;
 use Money\Currency;
 use PHPUnit\Framework\TestCase;
 

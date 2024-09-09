@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Application\Command\Subscribers;
+namespace Mirspay\Tests\Application\Command\Subscribers;
 
-use App\Subscriber\Channel\NotificationChannelCollection;
-use App\Tests\Application\Command\AbstractCommandTest;
+use Mirspay\Subscriber\Channel\NotificationChannelCollection;
+use Mirspay\Tests\Application\Command\AbstractCommandTest;
 use Symfony\Component\Console\Tester\CommandTester;
 
 final class ChannelsCommandTest extends AbstractCommandTest

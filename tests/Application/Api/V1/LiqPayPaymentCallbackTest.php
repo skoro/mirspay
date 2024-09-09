@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Application\Api\V1;
+namespace Mirspay\Tests\Application\Api\V1;
 
-use App\Entity\OrderStatus;
-use App\Payment\LiqPay\Signature;
-use App\Repository\OrderRepository;
-use App\Tests\Concerns\WithFixtureLoader;
+use Mirspay\Entity\OrderStatus;
+use Mirspay\Payment\LiqPay\Signature;
+use Mirspay\Repository\OrderRepository;
+use Mirspay\Tests\Concerns\WithFixtureLoader;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 

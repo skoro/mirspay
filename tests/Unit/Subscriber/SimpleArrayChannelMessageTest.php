@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Subscriber;
+namespace Mirspay\Tests\Unit\Subscriber;
 
-use App\Entity\Order;
-use App\Entity\OrderStatus;
-use App\Entity\PaymentProcessing;
-use App\Payment\Common\Message\ResponseInterface;
-use App\Subscriber\Channel\SimpleArrayChannelMessage;
-use App\Tests\Concerns\WithFaker;
+use Mirspay\Entity\Order;
+use Mirspay\Entity\OrderStatus;
+use Mirspay\Entity\PaymentProcessing;
+use Mirspay\Payment\Common\Message\ResponseInterface;
+use Mirspay\Subscriber\Channel\SimpleArrayChannelMessage;
+use Mirspay\Tests\Concerns\WithFaker;
 use PHPUnit\Framework\TestCase;
 
 final class SimpleArrayChannelMessageTest extends TestCase

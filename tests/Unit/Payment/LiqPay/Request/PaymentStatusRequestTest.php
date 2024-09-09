@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Payment\LiqPay\Request;
+namespace Mirspay\Tests\Unit\Payment\LiqPay\Request;
 
-use App\Payment\Common\Exception\RequestParameterRequiredException;
-use App\Payment\LiqPay\Request\MessageEncoder;
-use App\Payment\LiqPay\Request\PaymentStatusRequest;
-use App\Payment\LiqPay\Signature;
-use App\Tests\Concerns\WithFaker;
+use Mirspay\Payment\Common\Exception\RequestParameterRequiredException;
+use Mirspay\Payment\LiqPay\Request\MessageEncoder;
+use Mirspay\Payment\LiqPay\Request\PaymentStatusRequest;
+use Mirspay\Payment\LiqPay\Signature;
+use Mirspay\Tests\Concerns\WithFaker;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 

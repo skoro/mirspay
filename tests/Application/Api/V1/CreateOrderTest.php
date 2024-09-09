@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Application\Api\V1;
+namespace Mirspay\Tests\Application\Api\V1;
 
-use App\Entity\Order;
-use App\Payment\Common\Exception\PaymentGatewayIsNotRegisteredException;
-use App\Payment\Common\PaymentGatewayRegistry;
-use App\Payment\Common\PaymentGatewayRegistryInterface;
-use App\Repository\OrderRepository;
-use App\Tests\Concerns\WithOrderPostData;
-use App\Tests\Concerns\WithPaymentGateway;
+use Mirspay\Entity\Order;
+use Mirspay\Payment\Common\Exception\PaymentGatewayIsNotRegisteredException;
+use Mirspay\Payment\Common\PaymentGatewayRegistry;
+use Mirspay\Payment\Common\PaymentGatewayRegistryInterface;
+use Mirspay\Repository\OrderRepository;
+use Mirspay\Tests\Concerns\WithOrderPostData;
+use Mirspay\Tests\Concerns\WithPaymentGateway;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Uid\Uuid;
 

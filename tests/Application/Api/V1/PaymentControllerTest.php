@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Application\Api\V1;
+namespace Mirspay\Tests\Application\Api\V1;
 
-use App\Payment\Common\PaymentGatewayRegistry;
-use App\Tests\Concerns\WithPaymentGateway;
+use Mirspay\Payment\Common\PaymentGatewayRegistry;
+use Mirspay\Tests\Concerns\WithPaymentGateway;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class PaymentControllerTest extends WebTestCase
