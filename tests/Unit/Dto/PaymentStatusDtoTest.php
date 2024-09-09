@@ -19,7 +19,7 @@ final class PaymentStatusDtoTest extends TestCase
         $response->method('getCode')->willReturn(null);
         $response->method('getRawData')->willReturn(false);
 
-        $dto = PaymentStatusDto::makeFromResponse('123', $response);
+        $dto = PaymentStatusDto::makeFromPaymentGatewayResponse('123', $response);
 
         $this->assertEquals('123', $dto->paymentGatewayId);
         $this->assertEquals('', $dto->message);
@@ -40,7 +40,7 @@ final class PaymentStatusDtoTest extends TestCase
         $response->method('getCode')->willReturn(null);
         $response->method('getRawData')->willReturn($data);
 
-        $dto = PaymentStatusDto::makeFromResponse('123', $response);
+        $dto = PaymentStatusDto::makeFromPaymentGatewayResponse('123', $response);
 
         $this->assertEquals($expected, $dto->data);
     }

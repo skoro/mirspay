@@ -37,7 +37,7 @@ final readonly class PaymentStatusDto
     ) {
     }
 
-    public static function makeFromResponse(
+    public static function makeFromPaymentGatewayResponse(
         string $paymentGatewayId,
         ResponseInterface $response,
     ): self {
