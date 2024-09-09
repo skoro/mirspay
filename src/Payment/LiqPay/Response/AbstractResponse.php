@@ -8,6 +8,7 @@ use App\Payment\Common\Message\AbstractResponse as CommonAbstractResponse;
 use App\Payment\Common\Message\MessageInterface;
 use App\Payment\Common\Message\NullRequest;
 use App\Payment\Common\Message\RequestInterface;
+use Override;
 
 abstract class AbstractResponse extends CommonAbstractResponse
 {
@@ -16,6 +17,17 @@ abstract class AbstractResponse extends CommonAbstractResponse
         RequestInterface $request,
     ) {
         parent::__construct($request);
+    }
+
+    #[Override]
+    public function getCode(): string
+    {
+        return (string) ($this->data['code'] ?? '');
+    }
+
+    public function getStatus(): string
+    {
+        return (string) ($this->data['status'] ?? '');
     }
 
     public static function makeOfMessage(MessageInterface $message, RequestInterface | null $request = null): static
