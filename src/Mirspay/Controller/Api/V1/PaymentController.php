@@ -115,6 +115,6 @@ class PaymentController extends AbstractController
         $event = $this->eventDispatcher->dispatch(new PaymentStatusEvent($order, $statusResponse));
         $statusResponse = $event->paymentStatusResponse;
 
-        return $this->json(PaymentStatusDto::makeFromResponse($paymentGateway->getId(), $statusResponse));
+        return $this->json(PaymentStatusDto::makeFromPaymentGatewayResponse($paymentGateway->getId(), $statusResponse));
     }
 }

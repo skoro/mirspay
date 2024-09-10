@@ -15,7 +15,7 @@ final class PaymentStatusResponse extends AbstractResponse
 
     public function isSuccessful(): bool
     {
-        $status = $this->data['status'] ?? '';
+        $status = $this->getStatus();
 
         return $status === self::SUCCESS;
     }

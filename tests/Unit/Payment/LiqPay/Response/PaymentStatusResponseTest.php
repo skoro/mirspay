@@ -29,4 +29,22 @@ final class PaymentStatusResponseTest extends TestCase
         $this->assertEquals('123456789', $response->getTransactionId(), 'Payment transaction is not matched');
         $this->assertEquals(123456789, $response->getPaymentId(), 'Payment id is not matched');
     }
+
+    public function testLiqPayPaymentNotFoundResponse(): void
+    {
+        $data = $this->loadJsonFixture('liqpay/payment-not-found-status.json');
+
+        $message = $this->createStub(MessageInterface::class);
+        $message
+            ->method('getRawData')
+            ->willReturn($data);
+
+        $response = PaymentStatusResponse::makeOfMessage($message);
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertEquals('Платіж не знайдено', $response->getMessage());
+        $this->assertEquals('', $response->getTransactionId(), 'Transaction id must be empty');
+        $this->assertEquals('', $response->getPaymentId());
+        $this->assertEquals('payment_not_found', $response->getCode(), 'Payment code is not matched');
+    }
 }

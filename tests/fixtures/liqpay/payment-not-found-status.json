@@ -1,0 +1,7 @@
+{
+  "code": "payment_not_found",
+  "err_code": "payment_not_found",
+  "err_description": "Платіж не знайдено",
+  "result": "error",
+  "status": "error"
+}
