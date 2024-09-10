@@ -37,7 +37,7 @@ final readonly class PaymentStatusDto
     ) {
     }
 
-    public static function makeFromResponse(
+    public static function makeFromPaymentGatewayResponse(
         string $paymentGatewayId,
         ResponseInterface $response,
     ): self {
@@ -45,9 +45,9 @@ final readonly class PaymentStatusDto
             paymentGatewayId: $paymentGatewayId,
             isSuccess: $response->isSuccessful(),
             transactionId: $response->getTransactionId(),
-            message: $response->getMessage(),
-            code: $response->getCode(),
-            data: $response->getRawData(),
+            message: (string) $response->getMessage(),
+            code: (string) $response->getCode(),
+            data: (array) $response->getRawData(),
         );
     }
 }
