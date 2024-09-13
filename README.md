@@ -2,7 +2,7 @@ _The project still in progress..._
 
 ## Payment Proxy
 Payment Proxy service provides an easy api for order payments
-via various gateways. Please, take a look at the picture below to get an idea how it works:
+via various gateways. Please take a look at the picture below to get an idea how it works:
 
 ![Service scheme](./scheme.png)
 
@@ -18,7 +18,7 @@ via various gateways. Please, take a look at the picture below to get an idea ho
 ## Install
 
 ### Docker
-Close the repository:
+Clone the repository:
 ```shell
 git clone https://github.com/skoro/mirspay.git
 ```
