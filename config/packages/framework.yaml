@@ -18,8 +18,8 @@ framework:
     php_errors:
         log: true
 
-    # expose.dev
-    trusted_proxies: '127.0.0.1'
+    # expose.dev (local and docker)
+    trusted_proxies: '127.0.0.0/8,172.16.0.0/12'
     trusted_headers: [ 'x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port', 'x-forwarded-prefix' ]
 
 when@test:
