@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Payment\LiqPay\Response;
+namespace Mirspay\Tests\Unit\Payment\LiqPay\Response;
 
-use App\Payment\Common\Message\MessageInterface;
-use App\Payment\LiqPay\Response\PaymentStatusResponse;
-use App\Tests\Concerns\WithFixtureLoader;
+use Mirspay\Payment\Common\Message\MessageInterface;
+use Mirspay\Payment\LiqPay\Response\PaymentStatusResponse;
+use Mirspay\Tests\Concerns\WithFixtureLoader;
 use PHPUnit\Framework\TestCase;
 
 final class PaymentStatusResponseTest extends TestCase

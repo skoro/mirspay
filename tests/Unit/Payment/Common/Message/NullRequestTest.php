@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Payment\Common\Message;
+namespace Mirspay\Tests\Unit\Payment\Common\Message;
 
-use App\Payment\Common\Message\NullRequest;
+use Mirspay\Payment\Common\Message\NullRequest;
 use PHPUnit\Framework\TestCase;
 
 final class NullRequestTest extends TestCase

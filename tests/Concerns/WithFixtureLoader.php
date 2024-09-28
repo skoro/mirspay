@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Concerns;
+namespace Mirspay\Tests\Concerns;
 
 trait WithFixtureLoader
 {

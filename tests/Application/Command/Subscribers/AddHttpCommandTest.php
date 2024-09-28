@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Application\Command\Subscribers;
+namespace Mirspay\Tests\Application\Command\Subscribers;
 
-use App\Entity\OrderStatus;
-use App\Repository\SubscriberRepository;
-use App\Subscriber\Channel\NotificationChannelCollection;
-use App\Tests\Application\Command\AbstractCommandTest;
-use App\Tests\Concerns\WithFaker;
+use Mirspay\Entity\OrderStatus;
+use Mirspay\Repository\SubscriberRepository;
+use Mirspay\Subscriber\Channel\NotificationChannelCollection;
+use Mirspay\Tests\Application\Command\AbstractCommandTest;
+use Mirspay\Tests\Concerns\WithFaker;
 use Symfony\Component\Console\Tester\CommandTester;
 
 final class AddHttpCommandTest extends AbstractCommandTest

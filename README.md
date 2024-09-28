@@ -106,3 +106,37 @@ The request will contain json data like this:
   }
 }
 ```
+
+## How to debug payment gateway callbacks
+
+In order to debug payment gateway callback responses, [expose](https://expose.dev/) tool can be used to create a tunnel
+to your local development environment.
+If you use docker, start `expose` with the following command:
+```shell
+expose share http://localhost
+```
+
+You will see external _Public HTTP_ and _Public HTTPS_ urls in output.
+Use one of those urls and send Create Order request like this:
+```
+curl --location 'https://okdfskdfj126722jsnxz.sharedwithexpose.com/api/v1/order' \
+--header 'Content-Type: application/json' \
+--data '{
+    "order_num": "00001",
+    "payment_gateway": "liqpay",
+    "description": "Order #001",
+    "return_url": "https://super-site.com/thank-you",
+    "products": [
+        {
+            "sku": "A01001",
+            "price": 1900,
+            "qty": 1,
+            "name": "Beer"
+        }
+    ]
+}'
+```
+Make sure `status_check` in the response has an external url,
+that means your host is shared and the payment gateway will send a callback via the external url. 
+
+If you still have localhost, check `trusted_proxies` settings in `config/packages/framework.yaml`.

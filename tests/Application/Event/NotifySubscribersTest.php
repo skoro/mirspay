@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Application\Event;
+namespace Mirspay\Tests\Application\Event;
 
-use App\Entity\OrderStatus;
-use App\Entity\PaymentProcessing;
-use App\Event\OrderStatusWasChanged;
-use App\EventListener\NotifySubscribersListener;
-use App\Payment\Common\Message\ResponseInterface;
-use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManager;
+use Mirspay\Entity\OrderStatus;
+use Mirspay\Entity\PaymentProcessing;
+use Mirspay\Event\OrderStatusWasChanged;
+use Mirspay\EventListener\NotifySubscribersListener;
+use Mirspay\Payment\Common\Message\ResponseInterface;
+use Mirspay\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

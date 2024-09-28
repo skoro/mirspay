@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Subscriber;
+namespace Mirspay\Tests\Unit\Subscriber;
 
-use App\Entity\Order;
-use App\Entity\PaymentProcessing;
-use App\Entity\Subscriber;
-use App\Payment\Common\Message\ResponseInterface;
-use App\Subscriber\Action\SendSubscriberNotificationAction;
-use App\Subscriber\Channel\ChannelMessageInterface;
-use App\Subscriber\Channel\NotificationChannelCollection;
-use App\Subscriber\Channel\NotificationChannelInterface;
+use Mirspay\Entity\Order;
+use Mirspay\Entity\PaymentProcessing;
+use Mirspay\Entity\Subscriber;
+use Mirspay\Payment\Common\Message\ResponseInterface;
+use Mirspay\Subscriber\Action\SendSubscriberNotificationAction;
+use Mirspay\Subscriber\Channel\ChannelMessageInterface;
+use Mirspay\Subscriber\Channel\NotificationChannelCollection;
+use Mirspay\Subscriber\Channel\NotificationChannelInterface;
 use PHPUnit\Framework\TestCase;
 
 final class SendSubscriberNotificationActionTest extends TestCase

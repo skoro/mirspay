@@ -1,5 +1,5 @@
 controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Mirspay/Controller/
+        namespace: Mirspay\Controller
     type: attribute

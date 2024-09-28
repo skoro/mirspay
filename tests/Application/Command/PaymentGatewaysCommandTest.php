@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Application\Command;
+namespace Mirspay\Tests\Application\Command;
 
-use App\Payment\Common\PaymentGatewayRegistry;
-use App\Tests\Concerns\WithPaymentGateway;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Mirspay\Payment\Common\PaymentGatewayRegistry;
+use Mirspay\Tests\Concerns\WithPaymentGateway;
 use Symfony\Component\Console\Tester\CommandTester;
 
 final class PaymentGatewaysCommandTest extends AbstractCommandTest

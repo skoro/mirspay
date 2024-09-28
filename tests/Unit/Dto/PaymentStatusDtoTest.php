@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Dto;
+namespace Mirspay\Tests\Unit\Dto;
 
-use App\Dto\PaymentStatusDto;
-use App\Payment\Common\Message\ResponseInterface;
+use Mirspay\Dto\PaymentStatusDto;
+use Mirspay\Payment\Common\Message\ResponseInterface;
 use PHPUnit\Framework\TestCase;
 
 final class PaymentStatusDtoTest extends TestCase

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Concerns;
+namespace Mirspay\Tests\Concerns;
 
-use App\Payment\Common\GatewayInterface;
+use Mirspay\Payment\Common\GatewayInterface;
 use PHPUnit\Framework\MockObject\Stub\Stub;
 
 trait WithPaymentGateway
